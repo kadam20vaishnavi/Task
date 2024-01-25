@@ -1,0 +1,3 @@
+class activity_grid_view extends AppCompactActivity{
+
+}
