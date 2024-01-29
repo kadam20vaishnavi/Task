@@ -8,6 +8,7 @@ import android.text.Spanned;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridLayout;
@@ -27,6 +28,7 @@ public class RowGridActivity extends AppCompatActivity {
     ArrayList<String> alpabetlist=new ArrayList<>();
     int countlist;
 
+    ArrayAdapter arrayAdapter;
     int i;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,9 +43,6 @@ public class RowGridActivity extends AppCompatActivity {
         alphabet.setVisibility(View.GONE);
         character = findViewById(R.id.character);
         add = findViewById(R.id.add);
-
-        CustomAdapter customAdapter = new CustomAdapter(getApplicationContext(), alpabetlist);
-        gridlist.setAdapter(customAdapter);
 
         alphabet.setFilters(new InputFilter[]{
                 new InputFilter() {
@@ -94,14 +93,19 @@ public class RowGridActivity extends AppCompatActivity {
                             alphabet.setVisibility(View.VISIBLE);
                             alpabetlist.add(alphabet.getText().toString());
                             alphabet.setText("");
-
                         }
                     }else{
 
+                        Log.e("List if else:", "" + alpabetlist.size());
+                        if(alpabetlist.size()>0) {
+                            arrayAdapter = new ArrayAdapter(RowGridActivity.this, android.R.layout.simple_list_item_1, alpabetlist);
+                            gridlist.setAdapter(arrayAdapter);
+                        }
                         Toast.makeText(RowGridActivity.this, "Enough alphabet", Toast.LENGTH_SHORT).show();
                     }
                 }
             });
+
         //}
     }
 }

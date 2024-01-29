@@ -1,10 +1,14 @@
 package com.sbit.task;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,8 +16,9 @@ import java.util.List;
 public class CustomAdapter extends BaseAdapter {
 
     Context context;
-    List<String> list=new ArrayList<>();
+    ArrayList<String> list=new ArrayList<>();
 
+    LayoutInflater layoutInflater;
     public CustomAdapter(Context applicationContext, ArrayList<String> alpabetlist) {
         this.context=applicationContext;
         this.list=alpabetlist;
@@ -34,11 +39,18 @@ public class CustomAdapter extends BaseAdapter {
         return 0;
     }
 
+    @SuppressLint("ViewHolder")
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
-        view = inflter.inflate(R.layout.activity_gridview, null); // inflate the layout
-        ImageView icon = (ImageView) view.findViewById(R.id.icon); // get the reference of ImageView
-        icon.setImageResource(logos[i]); // set logo images
+
+        layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        view = layoutInflater.inflate(R.layout.activity_row_grid, null);
+        TextView textView = view.findViewById(R.id.titlegrid); // get the reference of ImageView
+        if(list.size()>0){
+            textView.setText(""+list.get(i));
+        }else{
+            Log.e("Size of list:", String.valueOf(list.size()));
+        }
         return view;
     }
 }
